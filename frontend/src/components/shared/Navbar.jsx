@@ -55,7 +55,7 @@ const Navbar = () => {
                     {!user ? (
                         <div className="flex items-center gap-3">
                             <Link to="/login">
-                                <Button variant="outline" className="text-teal-600 bg-white hover:bg-teal-50">Login</Button>
+                                <Button variant="outline" className="text-teal-600 bg-white hover:bg-teal-600">Login</Button>
                             </Link>
                             <Link to="/signup">
                                 <Button className="bg-teal-700 text-white hover:bg-teal-800">Signup</Button>

@@ -18,7 +18,7 @@ const Login = () => {
         password: "",
         role: "",
     });
-    const { loading,user } = useSelector(store => store.auth);
+    const { loading, user } = useSelector(store => store.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -48,11 +48,13 @@ const Login = () => {
             dispatch(setLoading(false));
         }
     }
-    useEffect(()=>{
-        if(user){
+
+    useEffect(() => {
+        if (user) {
             navigate("/");
         }
-    },[])
+    }, [])
+
     return (
         <div>
             <Navbar />
@@ -66,7 +68,7 @@ const Login = () => {
                             value={input.email}
                             name="email"
                             onChange={changeEventHandler}
-                            placeholder="patel@gmail.com"
+                            placeholder="abc@gmail.com"
                         />
                     </div>
 
@@ -77,35 +79,38 @@ const Login = () => {
                             value={input.password}
                             name="password"
                             onChange={changeEventHandler}
-                            placeholder="patel@gmail.com"
+                            placeholder="abc"
                         />
                     </div>
-                    <div className='flex items-center justify-between'>
-                        <RadioGroup className="flex items-center gap-4 my-5">
-                            <div className="flex items-center space-x-2">
-                                <Input
-                                    type="radio"
-                                    name="role"
-                                    value="student"
-                                    checked={input.role === 'student'}
-                                    onChange={changeEventHandler}
-                                    className="cursor-pointer"
-                                />
-                                <Label htmlFor="r1">Student</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Input
-                                    type="radio"
-                                    name="role"
-                                    value="recruiter"
-                                    checked={input.role === 'recruiter'}
-                                    onChange={changeEventHandler}
-                                    className="cursor-pointer"
-                                />
-                                <Label htmlFor="r2">Recruiter</Label>
-                            </div>
-                        </RadioGroup>
+
+                <div className="flex justify-center my-5">
+                    <div className="flex space-x-10">
+                        <label className="flex items-center space-x-2">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="student"
+                                checked={input.role === 'student'}
+                                onChange={changeEventHandler}
+                                className="cursor-pointer"
+                            />
+                            <span>Applicant</span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                            <input
+                                type="radio"
+                                name="role"
+                                value="recruiter"
+                                checked={input.role === 'recruiter'}
+                                onChange={changeEventHandler}
+                                className="cursor-pointer"
+                            />
+                            <span>Recruiter</span>
+                        </label>
                     </div>
+                </div>
+ 
+
                     {
                         loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Login</Button>
                     }
