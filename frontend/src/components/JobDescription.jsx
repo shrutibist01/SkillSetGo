@@ -34,7 +34,6 @@ const JobDescription = () => {
             toast.error(error.response.data.message);
         }
     }
-
     useEffect(()=>{
         const fetchSingleJob = async () => {
             try {
