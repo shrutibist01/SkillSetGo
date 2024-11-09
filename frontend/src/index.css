@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;   /* White background */
+    --foreground: 222.2 84% 4.9%;  /* Dark text color (black) */
+
+    --card: 0 0% 100%;  /* White card background */
+    --card-foreground: 222.2 84% 4.9%;  /* Dark card text */
+
+    --popover: 0 0% 100%;  /* White popover background */
+    --popover-foreground: 222.2 84% 4.9%;  /* Dark popover text */
+
+    --primary: 180 60% 40%;  /* Teal color for primary elements */
+    --primary-foreground: 210 40% 98%;  /* White text on primary elements */
+
+    --secondary: 180 60% 60%;  /* Lighter teal for secondary elements */
+    --secondary-foreground: 222.2 84% 4.9%;  /* Dark text for secondary elements */
+
+    --muted: 180 60% 80%;  /* Light teal for muted elements */
+    --muted-foreground: 215.4 16.3% 46.9%;  /* Darker gray for muted text */
+
+    --accent: 180 60% 50%;  /* A bright teal for accents */
+    --accent-foreground: 222.2 84% 4.9%;  /* Dark text for accent elements */
+
+    --destructive: 0 84.2% 60.2%;  /* Red for destructive actions */
+    --destructive-foreground: 210 40% 98%;  /* White text for destructive elements */
+
+    --border: 214.3 31.8% 91.4%;  /* Light gray for borders */
+    --input: 214.3 31.8% 91.4%;  /* Light gray for input fields */
+    --ring: 180 60% 40%;  /* Teal for focus rings */
+
+    --radius: 0.5rem;  /* Border radius */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;  /* Dark background for dark mode */
+    --foreground: 210 40% 98%;  /* Light text for dark mode */
+
+    --card: 222.2 84% 4.9%;  /* Dark card background */
+    --card-foreground: 210 40% 98%;  /* Light card text */
+
+    --popover: 222.2 84% 4.9%;  /* Dark popover background */
+    --popover-foreground: 210 40% 98%;  /* Light popover text */
+
+    --primary: 210 40% 98%;  /* Light primary color in dark mode */
+    --primary-foreground: 222.2 47.4% 11.2%;  /* Dark text on primary elements in dark mode */
+
+    --secondary: 180 50% 40%;  /* Darker teal for secondary elements in dark mode */
+    --secondary-foreground: 210 40% 98%;  /* Light text for secondary elements in dark mode */
+
+    --muted: 180 60% 60%;  /* Darker muted color for dark mode */
+    --muted-foreground: 215 20.2% 65.1%;  /* Darker muted text for dark mode */
+
+    --accent: 180 60% 40%;  /* Darker accent color for dark mode */
+    --accent-foreground: 210 40% 98%;  /* Light text for accent elements in dark mode */
+
+    --destructive: 0 62.8% 30.6%;  /* Dark red for destructive actions in dark mode */
+    --destructive-foreground: 210 40% 98%;  /* Light text for destructive elements in dark mode */
+
+    --border: 217.2 32.6% 17.5%;  /* Dark border for dark mode */
+    --input: 217.2 32.6% 17.5%;  /* Darker input background for dark mode */
+    --ring: 180 60% 40%;  /* Teal for focus rings in dark mode */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
