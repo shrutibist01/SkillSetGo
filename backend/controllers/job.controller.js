@@ -1,4 +1,6 @@
 import { Job } from "../models/job.model.js";
+import bcrypt from 'bcryptjs';
+import { User } from '../models/user.model.js';
 
 // admin post krega job
 export const postJob = async (req, res) => {
@@ -101,3 +103,34 @@ export const getAdminJobs = async (req, res) => {
         console.log(error);
     }
 }
+
+export const deleteJob = async (req, res) => {
+    try {
+        const { password } = req.body;
+        const jobId = req.params.id;
+        const userId = req.id;
+
+        // Fetch recruiter details for password verification
+        const recruiter = await User.findById(userId);
+        if (!recruiter) {
+            return res.status(404).json({ message: "Recruiter not found", success: false });
+        }
+
+        // Verify the password
+        const isMatch = await bcrypt.compare(password, recruiter.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Incorrect password", success: false });
+        }
+
+        // Delete the job if password is correct
+        const job = await Job.findByIdAndDelete(jobId);
+        if (!job) {
+            return res.status(404).json({ message: "Job not found", success: false });
+        }
+
+        return res.status(200).json({ message: "Job deleted successfully", success: true });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error", success: false });
+    }
+};

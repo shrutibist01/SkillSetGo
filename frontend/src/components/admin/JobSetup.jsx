@@ -30,6 +30,8 @@ const JobSetup = () => {
     });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [password, setPassword] = useState(""); // To store recruiter’s password for confirmation
 
     // Fetch job data on mount
     useEffect(() => {
@@ -45,7 +47,8 @@ const JobSetup = () => {
                         salary: res.data.job.salary,
                         location: res.data.job.location,
                         jobType: res.data.job.jobType,
-                        experience: res.data.job.experienceLevel,
+                        // experience: res.data.job.experienceLevel,
+                        experienceLevel: input.experience,
                         position: res.data.job.position,
                         companyId: res.data.job.company._id
                     });
@@ -85,6 +88,29 @@ const JobSetup = () => {
             toast.error(error.response?.data?.message || "Failed to update job");
         } finally {
             setLoading(false);
+        }
+    };
+
+
+    const deleteHandler = async () => {
+        try {
+            setLoading(true);
+            const res = await axios.delete(`${JOB_API_END_POINT}/delete/${params.id}`, {
+                data: { password },
+                withCredentials: true
+            });
+            if (res.data.success) {
+                toast.success(res.data.message);
+                navigate("/admin/jobs");
+            } else {
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to delete job");
+        } finally {
+            setLoading(false);
+            setShowDeleteModal(false);
+            setPassword(""); // Clear password input
         }
     };
 
@@ -154,7 +180,33 @@ const JobSetup = () => {
                     {
                         loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Updating...</Button> : <Button type="submit" className="w-full my-4">Update Job</Button>
                     }
+                    <Button type="button" onClick={() => setShowDeleteModal(true)} variant="destructive" className="w-full my-4">Delete Job</Button>
                 </form>
+
+                {showDeleteModal && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                            <h2>Confirm Job Deletion</h2>
+                            <p>Type your password to confirm deletion.</p>
+                            <Input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter your password"
+                                className="mb-4 w-full" // Add this class
+                            />
+                           
+                            <div className="flex justify-end gap-4">
+                                <Button onClick={deleteHandler} disabled={!password} variant="destructive" className="px-4 py-2">
+                                    Delete
+                                </Button>
+                                <Button onClick={() => setShowDeleteModal(false)} variant="outline" className="px-4 py-2">
+                                    Cancel
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
