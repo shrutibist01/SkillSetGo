@@ -45,6 +45,7 @@ const Jobs = () => {
                                                 key={job?._id}>
                                                 <Job job={job} />
                                             </motion.div>
+                                            
                                         ))
                                     }
                                 </div>

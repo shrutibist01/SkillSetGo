@@ -53,7 +53,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <div className="flex-grow py-20 px-4 bg-white">
+      <div className="flex-grow py-15 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold mb-4">Why Choose SkillSetGo?</h2>
@@ -112,11 +112,6 @@ const HeroSection = () => {
                   </div>
                 </div>
               </div>
-              <Link to="/login">
-                <Button className="mt-6 bg-teal-600 hover:bg-teal-700">
-                  Find Jobs <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
             </div>
             <div>
               <h2 className="text-3xl font-bold mb-6">
@@ -142,11 +137,6 @@ const HeroSection = () => {
                   </div>
                 </div>
               </div>
-              <Link to="/login">
-                <Button className="mt-6 bg-teal-600 hover:bg-teal-700">
-                  Post a Job <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
             </div>
           </div>
 
@@ -158,11 +148,6 @@ const HeroSection = () => {
               Whether you are looking for your next career move or searching for
               top talent, SkillSetGo has you covered.
             </p>
-            <Link to="/login">
-              <Button className="bg-teal-600 hover:bg-teal-700">
-                Get Started Now <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
           </div>
         </div>
       </div>

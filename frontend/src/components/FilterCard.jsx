@@ -4,7 +4,7 @@ import { Label } from './ui/label';
 import { useDispatch } from 'react-redux';
 import { setSearchedQuery } from '@/redux/jobSlice';
 
-// Data for filters
+
 const filterData = [
     {
         filterType: "Location",
@@ -20,7 +20,6 @@ const filterData = [
     },
 ];
 
-// Individual Filter Option Component
 const FilterOption = ({ value, id }) => (
     <div className='flex items-center space-x-2 my-2'>
         <RadioGroupItem value={value} id={id} />
@@ -28,7 +27,6 @@ const FilterOption = ({ value, id }) => (
     </div>
 );
 
-// Filter Category Component
 const FilterCategory = ({ category, options }) => (
     <div>
         <h1 className='font-bold text-lg'>{category}</h1>
@@ -44,6 +42,12 @@ const FilterCard = () => {
 
     const changeHandler = (value) => setSelectedValue(value);
 
+    // Reset all filters
+    const resetFilters = () => {
+        setSelectedValue('');
+        dispatch(setSearchedQuery(''));
+    };
+
     useEffect(() => {
         dispatch(setSearchedQuery(selectedValue));
     }, [selectedValue, dispatch]);
@@ -52,6 +56,15 @@ const FilterCard = () => {
         <div className='w-full bg-white p-3 rounded-md'>
             <h1 className='font-bold text-lg'>Filter Jobs</h1>
             <hr className='mt-3' />
+            
+            {/* Reset Button */}
+            <button 
+                className='text-teal-500 font-bold text-sm mt-4 mb-4'
+                onClick={resetFilters}
+            >
+                Reset Filters
+            </button>
+            
             <RadioGroup value={selectedValue} onValueChange={changeHandler}>
                 {filterData.map(({ filterType, options }, index) => (
                     <FilterCategory key={index} category={filterType} options={options} />
