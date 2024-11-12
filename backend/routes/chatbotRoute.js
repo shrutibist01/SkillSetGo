@@ -5,5 +5,5 @@ import { runChat } from '../controllers/chatbot.controller.js'; // Import the ru
 const router = express.Router();
 
 router.route('/ask').post(runChat); // Route that calls the runChat function for the /ask endpoint
-
+router.post('/chat', runChat);
 export default router;

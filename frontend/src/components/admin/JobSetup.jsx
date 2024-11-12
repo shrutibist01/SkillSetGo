@@ -69,17 +69,49 @@ const JobSetup = () => {
         setInput({ ...input, companyId: selectedCompany?._id });
     };
 
+    // const submitHandler = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         setLoading(true);
+    //         const updatedJobData = { ...input, requirements: input.requirements.split(/[,]\s*/) };
+    //         const res = await axios.put(`${JOB_API_END_POINT}/update/${params.id}`, updatedJobData, {
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             withCredentials: true
+    //         });
+    //         if (res.data.success) {
+    //             toast.success(res.data.message);
+    //             navigate("/admin/jobs");
+    //         }
+    //     } catch (error) {
+    //         toast.error(error.response?.data?.message || "Failed to update job");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
             setLoading(true);
-            const updatedJobData = { ...input, requirements: input.requirements.split(/[,]\s*/) };
+            const updatedJobData = { 
+                title: input.title,
+                description: input.description,
+                requirements: input.requirements.split(/[,]\s*/), // convert string to array
+                salary: input.salary,
+                location: input.location,
+                jobType: input.jobType,
+                experienceLevel: input.experience, // correct the field name here
+                position: input.position,
+            };
+            
             const res = await axios.put(`${JOB_API_END_POINT}/update/${params.id}`, updatedJobData, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 withCredentials: true
             });
+    
             if (res.data.success) {
                 toast.success(res.data.message);
                 navigate("/admin/jobs");
@@ -90,6 +122,7 @@ const JobSetup = () => {
             setLoading(false);
         }
     };
+    
 
 
     const deleteHandler = async () => {
