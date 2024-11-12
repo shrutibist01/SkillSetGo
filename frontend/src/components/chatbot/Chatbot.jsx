@@ -21,7 +21,13 @@ const Chatbot = () => {
             const response = await axios.post(apiUrl, {
                 message: userInput,
             });
-            setMessages([...messages, { role: 'user', text: userInput }, { role: 'bot', text: response.data.response }]);
+
+            // Add bot response to messages
+            setMessages([
+                ...messages,
+                { role: 'user', text: userInput },
+                { role: 'bot', text: response.data.response }, // This is where the HTML content is received
+            ]);
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -73,15 +79,16 @@ const Chatbot = () => {
                     <div style={{ overflowY: 'auto', flex: 1, marginBottom: '10px' }}>
                         {messages.map((msg, index) => (
                             <div key={index} style={{ textAlign: msg.role === 'user' ? 'right' : 'left', marginBottom: '5px' }}>
-                                <div style={{
-                                    display: 'inline-block',
-                                    padding: '8px',
-                                    borderRadius: '10px',
-                                    backgroundColor: msg.role === 'user' ? '#e0e0e0' : '#f9f9f9',
-                                    color: msg.role === 'user' ? '#333' : '#555',
-                                }}>
-                                    {msg.text}
-                                </div>
+                                <div
+                                    style={{
+                                        display: 'inline-block',
+                                        padding: '8px',
+                                        borderRadius: '10px',
+                                        backgroundColor: msg.role === 'user' ? '#e0e0e0' : '#f9f9f9',
+                                        color: msg.role === 'user' ? '#333' : '#555',
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: msg.text }} // Safely render HTML from bot response
+                                />
                             </div>
                         ))}
                     </div>
