@@ -134,3 +134,49 @@ export const deleteJob = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error", success: false });
     }
 };
+
+export const updateJob = async (req, res) => {
+    try {
+        const { title, description, requirements, salary, experienceLevel, location, jobType, position } = req.body;
+        const jobId = req.params.id;
+
+        console.log("Job ID:", jobId);
+        console.log("Received update data:", req.body);
+
+        const updateData = {
+            ...(title && { title }),
+            ...(description && { description }),
+            ...(requirements && { requirements }),
+            ...(salary && { salary: Number(salary) }),
+            ...(experienceLevel && { experienceLevel: Number(experienceLevel) }),
+            ...(location && { location }),
+            ...(jobType && { jobType }),
+            ...(position && { position: Number(position) }),
+        };
+
+        console.log("Data being updated:", updateData);
+
+        const job = await Job.findByIdAndUpdate(jobId, updateData, { new: true });
+
+        if (!job) {
+            console.log("Job not found with ID:", jobId);
+            return res.status(404).json({
+                message: "Job not found.",
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "Job information updated successfully.",
+            job,
+            success: true
+        });
+
+    } catch (error) {
+        console.error("Error updating job:", error.message || error);
+        return res.status(500).json({
+            message: error.message || "Internal Server Error",
+            success: false
+        });
+    }
+};

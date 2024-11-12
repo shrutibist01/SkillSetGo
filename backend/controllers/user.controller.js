@@ -127,8 +127,6 @@ export const updateProfile = async (req, res) => {
             format: "pdf" // Explicitly specify the format as "pdf"
         });
 
-
-
         let skillsArray;
         if(skills){
             skillsArray = skills.split(",");
@@ -155,7 +153,6 @@ export const updateProfile = async (req, res) => {
             user.profile.resumeOriginalName = file.originalname // Save the original file name
         }
         console.log("Resume URL from Cloudinary:", cloudResponse.secure_url);
-
 
 
         await user.save();

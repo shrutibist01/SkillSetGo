@@ -41,16 +41,15 @@ const JobSetup = () => {
                 if (res.data.success) {
                     dispatch(setSingleJob(res.data.job));
                     setInput({
-                        title: res.data.job.title,
-                        description: res.data.job.description,
-                        requirements: res.data.job.requirements.join(', '),
-                        salary: res.data.job.salary,
-                        location: res.data.job.location,
-                        jobType: res.data.job.jobType,
-                        // experience: res.data.job.experienceLevel,
-                        experienceLevel: input.experience,
-                        position: res.data.job.position,
-                        companyId: res.data.job.company._id
+                        title: res.data.job.title || "",
+                        description: res.data.job.description || "",
+                        requirements: (res.data.job.requirements || []).join(', '),
+                        salary: res.data.job.salary || "",
+                        location: res.data.job.location || "",
+                        jobType: res.data.job.jobType || "",
+                        experienceLevel: res.data.job.experienceLevel || 0,  // Corrected here
+                        position: res.data.job.position || 0,
+                        companyId: res.data.job.company?._id || ""
                     });
                 }
             } catch (error) {
@@ -59,6 +58,7 @@ const JobSetup = () => {
         };
         fetchJobById();
     }, [params.id, dispatch]);
+    
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -92,38 +92,39 @@ const JobSetup = () => {
     // };
     const submitHandler = async (e) => {
         e.preventDefault();
+        console.log("Submit handler triggered");
+    
         try {
             setLoading(true);
-            const updatedJobData = { 
-                title: input.title,
-                description: input.description,
-                requirements: input.requirements.split(/[,]\s*/), // convert string to array
-                salary: input.salary,
-                location: input.location,
-                jobType: input.jobType,
-                experienceLevel: input.experience, // correct the field name here
-                position: input.position,
-            };
-            
+            console.log("Loading set to true");
+    
+            const updatedJobData = { ...input, requirements: input.requirements.split(/[,]\s*/) };
+            console.log("Updated job data prepared:", updatedJobData);
+    
             const res = await axios.put(`${JOB_API_END_POINT}/update/${params.id}`, updatedJobData, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 withCredentials: true
             });
+            console.log("Response received from API:", res);
     
             if (res.data.success) {
+                console.log("Job updated successfully:", res.data.message);
                 toast.success(res.data.message);
                 navigate("/admin/jobs");
+            } else {
+                console.log("Job update was not successful:", res.data);
             }
         } catch (error) {
+            console.error("Error updating job:", error.response?.data?.message || error);
             toast.error(error.response?.data?.message || "Failed to update job");
         } finally {
+            console.log("Setting loading to false");
             setLoading(false);
         }
     };
     
-
 
     const deleteHandler = async () => {
         try {
