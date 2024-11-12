@@ -1,5 +1,5 @@
 import React from 'react'
-import { Facebook, Twitter, Linkedin } from 'lucide-react'
+import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -14,14 +14,14 @@ export default function Footer() {
           </div>
           
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="https://facebook.com" className="hover:text-teal-200 transition-colors" aria-label="Facebook">
-              <Facebook className="w-6 h-6" />
-            </a>
             <a href="https://twitter.com" className="hover:text-teal-200 transition-colors" aria-label="Twitter">
               <Twitter className="w-6 h-6" />
             </a>
             <a href="https://linkedin.com" className="hover:text-teal-200 transition-colors" aria-label="LinkedIn">
               <Linkedin className="w-6 h-6" />
+            </a>
+            <a href="https://linkedin.com" className="hover:text-teal-200 transition-colors" aria-label="Instagram">
+              <Instagram className="w-6 h-6" />
             </a>
           </div>
         </div>
@@ -33,15 +33,6 @@ export default function Footer() {
               SkillSetGo is the leading platform for landing your dream jobs. 
               We connect talented individuals with top employers worldwide.
             </p>
-          </div>
-          <div className="w-full md:w-1/2 lg:w-1/3 mb-4 md:mb-0">
-            <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
-            <ul className="text-sm space-y-2">
-              <li><a href="/about" className="hover:text-teal-200 transition-colors">About Us</a></li>
-              <li><a href="/courses" className="hover:text-teal-200 transition-colors">Courses</a></li>
-              <li><a href="/jobs" className="hover:text-teal-200 transition-colors">Job Listings</a></li>
-              <li><a href="/contact" className="hover:text-teal-200 transition-colors">Contact Us</a></li>
-            </ul>
           </div>
           <div className="w-full md:w-1/2 lg:w-1/3">
             <h3 className="text-lg font-semibold mb-2">Contact</h3>
