@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
 const router = Router();
 const MODEL_NAME = "gemini-pro"; // Replace with the correct model name
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
