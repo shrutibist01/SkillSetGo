@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './shared/Navbar'
 import FilterCard from './FilterCard'
 import Job from './Job';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import Chatbot from '../components/chatbot/Chatbot';
 
 const Jobs = () => {
     const { allJobs, searchedQuery } = useSelector(store => store.job);
@@ -52,7 +53,7 @@ const Jobs = () => {
                     }
                 </div>
             </div>
-
+            <Chatbot />
 
         </div>
     )

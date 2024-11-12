@@ -8,14 +8,15 @@ export const postJob = async (req, res) => {
 
         if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
             return res.status(400).json({
-                message: "Somethin is missing.",
+                message: "Something is missing.",
                 success: false
             })
         };
         const job = await Job.create({
             title,
             description,
-            requirements: requirements.split(","),
+            requirements: requirements.split(/[.]\s*/),  // Splits on both `.` and `,`
+            //requirements: requirements,
             salary: Number(salary),
             location,
             jobType,

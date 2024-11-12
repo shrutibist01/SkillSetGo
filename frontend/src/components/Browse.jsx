@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Navbar from './shared/Navbar'
 import Job from './Job';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchedQuery } from '@/redux/jobSlice';
 import useGetAllJobs from '@/hooks/useGetAllJobs';
+import Chatbot from '../components/chatbot/Chatbot';
 
 const Browse = () => {
     useGetAllJobs();
@@ -30,6 +31,8 @@ const Browse = () => {
                 </div>
 
             </div>
+            <Chatbot />
+
         </div>
     )
 }

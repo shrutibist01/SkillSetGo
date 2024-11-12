@@ -11,14 +11,14 @@ export const registerCompany = async (req, res) => {
                 success: false
             });
         }
-        let company = await Company.findOne({ name: companyName });
-        if (company) {
+        const existingCompany = await Company.findOne({ name: companyName });
+        if (existingCompany) {
             return res.status(400).json({
                 message: "You can't register same company.",
                 success: false
             })
         };
-        company = await Company.create({
+        const company = await Company.create({
             name: companyName,
             userId: req.id
         });
@@ -29,14 +29,19 @@ export const registerCompany = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
     }
 }
+
 export const getCompany = async (req, res) => {
     try {
         const userId = req.id; // logged in user id
         const companies = await Company.find({ userId });
-        if (!companies) {
+        if (!companies || companies.length === 0) {
             return res.status(404).json({
                 message: "Companies not found.",
                 success: false
@@ -44,12 +49,17 @@ export const getCompany = async (req, res) => {
         }
         return res.status(200).json({
             companies,
-            success:true
+            success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
     }
 }
+
 // get company by id
 export const getCompanyById = async (req, res) => {
     try {
@@ -66,19 +76,31 @@ export const getCompanyById = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
     }
 }
+
 export const updateCompany = async (req, res) => {
     try {
         const { name, description, website, location } = req.body;
- 
-        const file = req.file;
-        // idhar cloudinary ayega
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+        if (!req.file) {
+            return res.status(400).json({
+                message: "Logo is required.",
+                success: false
+            })
+        }
+
+        const fileUri = getDataUri(req.file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+            resource_type: "auto"  // Change this to "raw" if you want only non-image types
+        });
         const logo = cloudResponse.secure_url;
-    
+
         const updateData = { name, description, website, location, logo };
 
         const company = await Company.findByIdAndUpdate(req.params.id, updateData, { new: true });
@@ -90,11 +112,58 @@ export const updateCompany = async (req, res) => {
             })
         }
         return res.status(200).json({
-            message:"Company information updated.",
-            success:true
+            message: "Company information updated.",
+            success: true
         })
 
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
     }
 }
+
+
+export const updateJob = async (req, res) => {
+    try {
+        const { title, description, requirements, salary, experienceLevel, location, jobType, position } = req.body;
+        const jobId = req.params.id;
+
+        // Update the job data based on provided fields
+        const updateData = {
+            ...(title && { title }),
+            ...(description && { description }),
+            ...(requirements && { requirements: requirements.split(/[.,]\s*/) }), // Split requirements by `,` or `.`
+            ...(salary && { salary: Number(salary) }),
+            ...(experienceLevel && { experienceLevel: Number(experienceLevel) }),
+            ...(location && { location }),
+            ...(jobType && { jobType }),
+            ...(position && { position: Number(position) }),
+        };
+
+        // Update the job in the database
+        const job = await Job.findByIdAndUpdate(jobId, updateData, { new: true });
+
+        if (!job) {
+            return res.status(404).json({
+                message: "Job not found.",
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "Job information updated successfully.",
+            job,
+            success: true
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        });
+    }
+};

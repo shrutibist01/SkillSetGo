@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Search, Briefcase, CheckCircle, Users, MessageSquare, Building2, ArrowRight } from 'lucide-react'
 import { useDispatch } from 'react-redux'
@@ -117,7 +117,7 @@ const HeroSection = () => {
           <div className="text-center bg-teal-50 rounded-2xl p-12">
             <h2 className="text-3xl font-bold mb-6">Ready to Start Your Journey?</h2>
             <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-              Whether you're looking for your next career move or searching for top talent, SkillSetGo has you covered.
+              Whether you are looking for your next career move or searching for top talent, SkillSetGo has you covered.
             </p>
             <Button className="bg-teal-600 hover:bg-teal-700">
               Get Started Now <ArrowRight className="ml-2 h-4 w-4" />
