@@ -47,7 +47,10 @@ const Chatbot = () => {
                     fontSize: '24px',
                     cursor: 'pointer',
                     zIndex: 1000,
+                    transition: 'transform 0.3s ease' // added transition
                 }}
+                onMouseEnter={(e)=> e.currentTarget.style.transform = 'scale(1.2)'} // hover effect, scale up
+                onMouseLeave={(e)=>e.currentTarget.style.transform = 'scale(1)'} // not hover, scale back to original
             >
                 💬
             </div>

@@ -8,12 +8,15 @@ import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 import chatbotRoute from './routes/chatbotRoute.js';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 dotenv.config();
 
 //dotenv.config({});
 
 const app = express();
+const googleApiKey = process.env.GOOGLE_API_KEY;
 
 // middleware
 app.use(express.json());
