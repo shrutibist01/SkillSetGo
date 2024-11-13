@@ -41,3 +41,7 @@ const store = configureStore({
         }),
 });
 export default store;
+
+// redux helps you manage the state/data of your application in a more
+// centralized way. so instead of passing the props/data from component to component, 
+// we can store the data in one place and let the whole app access it.
